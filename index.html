@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAFE RIDE | IRTRA Petapa</title>
+  
+  <!-- Tipografías de la temática Solar Pop -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       VARIABLES DE COLOR E INSPIRACIÓN VISUAL (SOLAR POP)
+       =================================================== */
+    :root {
+      --orange-pop: #ff5400;
+      --pink-coral: #ff708d;
+      --pink-light: #ffe5ec;
+      --bg-cream: #fff5f2;
+      --card-bg: #ffffff;
+      --text-main: #2b1e2a;
+      --text-muted: #6e5868;
+      --purple-accent: #7b2cbf;
+      --radius-large: 32px;
+      --radius-pill: 999px;
+      --shadow-pop: 0 12px 30px rgba(255, 84, 0, 0.15);
+      --transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 25px;
+      width: 100%;
+    }
+
+    /* ===================================================
+       NAVBAR CON PESTAÑAS NAVEGABLES
+       =================================================== */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 245, 242, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      padding: 20px 0;
+      border-bottom: 2px solid var(--pink-light);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--orange-pop);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 2px solid var(--pink-light);
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--orange-pop);
+      color: white;
+      border-color: var(--orange-pop);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 84, 0, 0.3);
+    }
+
+    /* ===================================================
+       CONTROL DE PESTAÑAS (VISTAS INDEPENDIENTES)
+       =================================================== */
+    .tab-content {
+      display: none;
+      padding: 50px 0 80px;
+      animation: fadeInPop 0.4s ease-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeInPop {
+      from { opacity: 0; transform: scale(0.98) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ===================================================
+       ESTILOS GENERALE Y TARJETAS POP
+       =================================================== */
+    .section-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      background: var(--pink-light);
+      color: var(--orange-pop);
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .pop-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-large);
+      padding: 35px;
+      box-shadow: var(--shadow-pop);
+      transition: var(--transition);
+      border: 2px solid transparent;
+      margin-bottom: 25px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    /* ===================================================
+       INTEGRANTES INTERACTIVOS (FLIP CARDS GRANDES)
+       =================================================== */
+    .team-card-container {
+      perspective: 1000px;
+    }
+
+    .team-card-inner {
+      background: var(--card-bg);
+      border-radius: var(--radius-large);
+      padding: 30px;
+      box-shadow: var(--shadow-pop);
+      text-align: center;
+      transition: var(--transition);
+      border: 3px solid transparent;
+    }
+
+    .team-card-inner:hover {
+      border-color: var(--pink-coral);
+      transform: translateY(-5px);
+    }
+
+    /* Tarjetas 3D Flip para Avatares/Fotos Grandes */
+    .flip-box {
+      width: 100%;
+      height: 220px;
+      perspective: 1000px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    .flip-box-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+
+    .flip-box:hover .flip-box-inner, .flip-box.flipped .flip-box-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    }
+
+    .flip-front {
+      background: var(--pink-light);
+      border: 2px solid var(--pink-coral);
+      color: var(--orange-pop);
+    }
+
+    .flip-back {
+      background: var(--orange-pop);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .avatar-large-icon {
+      font-size: 3.5rem;
+      margin-bottom: 5px;
+    }
+
+    .info-toggle-btn {
+      background: var(--pink-light);
+      color: var(--orange-pop);
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: var(--transition);
+    }
+
+    .info-toggle-btn:hover {
+      background: var(--orange-pop);
+      color: white;
+    }
+
+    .member-info-extra {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px dashed var(--pink-light);
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ===================================================
+       ELEMENTOS TÉCNICOS & INDICADORES
+       =================================================== */
+    .zone-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      font-weight: 700;
+    }
+
+    .zone-red { background: #ffe3e3; color: #d63031; }
+    .zone-yellow { background: #fff9db; color: #f59f00; }
+    .zone-green { background: #d3f9d8; color: #2b8a3e; }
+
+    .component-box {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      border: 2px solid var(--pink-light);
+      transition: var(--transition);
+    }
+
+    .component-box:hover {
+      transform: scale(1.05);
+      border-color: var(--orange-pop);
+    }
+
+    .component-box span {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .code-display {
+      background: #231924;
+      color: #ff708d;
+      padding: 20px;
+      border-radius: 20px;
+      font-family: monospace;
+      font-size: 0.88rem;
+      max-height: 280px;
+      overflow-y: auto;
+      border: 3px solid var(--pink-coral);
+    }
+
+    .slot-placeholder {
+      width: 100%;
+      height: 280px;
+      background: var(--bg-cream);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 3px dashed var(--pink-coral);
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Formulario */
+    .form-control {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid var(--pink-light);
+      border-radius: var(--radius-pill);
+      margin-top: 8px;
+      margin-bottom: 20px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--orange-pop);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--orange-pop);
+      color: white;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-submit:hover {
+      background: var(--pink-coral);
+    }
+
+    footer {
+      margin-top: auto;
+      background: var(--card-bg);
+      text-align: center;
+      padding: 30px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-top: 2px solid var(--pink-light);
+    }
+
+    @media (max-width: 768px) {
+      .nav-wrapper { justify-content: center; }
+      .nav-tabs { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR CON PESTAÑAS NAVEGABLES -->
+  <header>
+    <div class="container nav-wrapper">
+      <div class="brand-logo">
+        ✴ SAFE RIDE
+      </div>
+      <ul class="nav-tabs">
+        <li><button class="tab-btn active" onclick="switchTab('inicio', this)">Inicio & Empresa</button></li>
+        <li><button class="tab-btn" onclick="switchTab('proyecto', this)">El Proyecto</button></li>
+        <li><button class="tab-btn" onclick="switchTab('circuito', this)">Circuito Tinkercad</button></li>
+        <li><button class="tab-btn" onclick="switchTab('equipo', this)">Equipo</button></li>
+        <li><button class="tab-btn" onclick="switchTab('documentos', this)">Documentación</button></li>
+        <li><button class="tab-btn" onclick="switchTab('contacto', this)">Contacto</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===================================================
+         PESTAÑA 1: INICIO & EMPRESA CONSULTORA
+         =================================================== -->
+    <section id="inicio" class="tab-content active">
+      <div class="grid-2" style="align-items: center; margin-bottom: 40px;">
+        <div>
+          <span class="section-badge">Proyecto Final Tecnología Aplicada ⚙️</span>
+          <h1 style="font-size: 3.2rem; color: var(--orange-pop); line-height: 1.1; margin-bottom: 15px;">
+            SAFE RIDE <br><span style="color: var(--pink-coral); font-style: italic;">IRTRA Petapa</span>
+          </h1>
+          <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 25px;">
+            Firma consultora especializada en ingeniería y automatización electromecánica. Presentamos una solución innovadora basada en microcontroladores para optimizar la seguridad operacional en atracciones mecánicas del parque IRTRA Petapa.
+          </p>
+          <button class="tab-btn active" onclick="switchTab('proyecto', document.querySelectorAll('.tab-btn')[1])">Explorar Proyecto ➔</button>
+        </div>
+
+        <div class="pop-card" style="background: var(--pink-coral); text-align: center; padding: 40px;">
+          <div class="slot-placeholder" style="background: white;">
+            <span style="font-size: 3.5rem;">✨</span>
+            <p style="font-weight: 900; color: var(--orange-pop); font-size: 1.2rem; margin-top: 10px;">[ LOGO DE SAFE RIDE ]</p>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Espacio asignado para la identidad gráfica oficial</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pop-card">
+        <span class="section-badge">Problemática IRTRA Petapa</span>
+        <h2 style="margin-bottom: 15px;">Contexto y Justificación del Proyecto</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">
+          En el parque de atracciones IRTRA Petapa, el flujo constante de visitantes en juegos de alto impacto exige un control riguroso de las zonas de peligro. Los errores humanos de aproximación a las estructuras mecánicas mientras están en movimiento representan un riesgo crítico de seguridad.
+        </p>
+        <p style="color: var(--text-muted);">
+          <strong>SAFE RIDE</strong> resuelve esta problemática automatizando la detección de invasión de perímetro mediante sensores ultrasónicos, emitiendo alertas inmediatas antes de que ocurra una colisión o accidente.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PESTAÑA 2: EL PROYECTO & ODS
+         =================================================== -->
+    <section id="proyecto" class="tab-content">
+      <span class="section-badge">Solución Tecnológica</span>
+      <h2 style="font-size: 2.2rem; margin-bottom: 25px;">Monitoreo de Proximidad y Control de Zonas</h2>
+
+      <div class="grid-3">
+        <!-- Zona de Peligro -->
+        <div class="pop-card">
+          <div style="font-size: 2.5rem; margin-bottom: 10px;">🚨</div>
+          <h3>Zona de Peligro</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">
+            Si un visitante u objeto se aproxima a la atracción a una distancia igual o menor a <strong>15 cm</strong>.
+          </p>
+          <div class="zone-indicator zone-red">
+            <span>Respuesta:</span> LED Rojo Encendido + Alarma Sonora de Buzzer.
+          </div>
+        </div>
+
+        <!-- Zona de Precaución -->
+        <div class="pop-card">
+          <div style="font-size: 2.5rem; margin-bottom: 10px;">⚠️</div>
+          <h3>Zona de Precaución</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">
+            Si la aproximación se encuentra en un rango intermedio entre <strong>16 cm y 50 cm</strong>.
+          </p>
+          <div class="zone-indicator zone-yellow">
+            <span>Respuesta:</span> LED Amarillo Parpadeante (Advertencia).
+          </div>
+        </div>
+
+        <!-- Zona Segura -->
+        <div class="pop-card">
+          <div style="font-size: 2.5rem; margin-bottom: 10px;">🟢</div>
+          <h3>Zona Segura</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">
+            Distancia mayor a <strong>50 cm</strong> del área restringida de la atracción.
+          </p>
+          <div class="zone-indicator zone-green">
+            <span>Respuesta:</span> Indicadores en reposo / Operación normal.
+          </div>
+        </div>
+      </div>
+
+      <!-- Alineación ODS -->
+      <div class="pop-card" style="margin-top: 10px;">
+        <span class="section-badge">Impacto Social</span>
+        <h3>Alineación con los Objetivos de Desarrollo Sostenible (ODS)</h3>
+        <p style="color: var(--text-muted); margin-top: 10px;">
+          SAFE RIDE se fundamenta en el <strong>ODS 9: Industria, Innovación e Infraestructura</strong>, promoviendo la modernización tecnológica de las atracciones públicas en Guatemala, mediante la implementación de infraestructuras fiables, sostenibles y altamente seguras para los usuarios.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PESTAÑA 3: CIRCUITO TINKERCAD & COMPONENTES
+         =================================================== -->
+    <section id="circuito" class="tab-content">
+      <span class="section-badge">Hardware & C++</span>
+      <h2 style="font-size: 2.2rem; margin-bottom: 25px;">Simulación Electrónica del Sistema</h2>
+
+      <div class="pop-card">
+        <h3>Componentes del Circuito Integrado</h3>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Listado oficial de componentes electromecánicos montados sobre Protoboard:</p>
+        
+        <div class="grid-4">
+          <div class="component-box"><span>🧠</span>Arduino Uno R3</div>
+          <div class="component-box"><span>📡</span>Sensor Ultrasónico HC-SR04</div>
+          <div class="component-box"><span>🟡</span>LED Amarillo (Precaución)</div>
+          <div class="component-box"><span>🔴</span>LED Rojo (Peligro)</div>
+          <div class="component-box"><span>🟢</span>LED Verde (Estado)</div>
+          <div class="component-box"><span>🔊</span>Buzzer Sonoro</div>
+          <div class="component-box"><span>⚡</span>Resistencias (3)</div>
+          <div class="component-box"><span>🔌</span>Protoboard & Jumpers</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Captura Circuito -->
+        <div class="pop-card">
+          <h3>Captura del Circuito Tinkercad</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Vista completa del conexionado en la placa de pruebas.</p>
+          <div class="slot-placeholder">
+            <span style="font-size: 3rem;">⚡</span>
+            <p style="font-weight: 800; color: var(--orange-pop);">[ ADJUNTAR CAPTURA DE TINKERCAD ]</p>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Imagen clara con la simulación en ejecución</span>
+          </div>
+        </div>
+
+        <!-- Código C++ -->
+        <div class="pop-card">
+          <h3>Código Fuente en C++</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Programación en texto puro (Sin bloques).</p>
+          <div class="code-display">
+<pre><code>// Librerias
+// Instancar obj
+// Definicion de PINES
+// PROYECTO FINAL TECNOLOGÍA APLICADA - SAFE RIDE (IRTRA PETAPA)
+//Catherine, Kimberly y Paula
+const int TRIG_PIN = 4;
+const int ECHO_PIN = 5;
+
+const int LED_AMARILLO = 2; // Renombrado a amarillo para coincidir con tu circuito
+const int LED_VERDE = 3;
+const int LED_ROJO = 9;
+
+const int BUZZER_PIN = 10;
+const int LDR_PIN = A0;
+
+const int DISTANCIA_PELIGRO_CM = 15;      // Distancia para LED Rojo y Buzzer
+const int DISTANCIA_PRECAUCION_CM = 50;   // Distancia para que parpadee el LED Amarillo
+const int LDR_UMBRAL_ARNES = 500;
+
+// Variables para controlar el parpadeo sin detener el programa
+unsigned long tiempoAnterior = 0;
+const long intervaloParpadeo = 250;       // Velocidad del parpadeo en milisegundos
+int estadoLedAmarillo = LOW;
+
+void setup() {
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  pinMode(LED_AMARILLO, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_ROJO, OUTPUT);
+
+  pinMode(BUZZER_PIN, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+long medirDistanciaCM() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(TRIG_PIN, LOW);
+
+  long duracion = pulseIn(ECHO_PIN, HIGH, 30000);
+
+  if (duracion == 0) {
+    return 999;
+  }
+
+  return duracion * 0.034 / 2;
+}
+
+void loop() {
+  int ldrValor = analogRead(LDR_PIN);
+  long distancia = medirDistanciaCM();
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.print(" cm | LDR: ");
+  Serial.println(ldrValor);
+
+  // Guardamos el tiempo actual para calcular cuándo debe parpadear
+  unsigned long tiempoActual = millis();
+
+  // 🔴 PERSONA/OBJETO DEMASIADO CERCA (15 cm o menos)
+  if (distancia <= DISTANCIA_PELIGRO_CM) {
+    digitalWrite(LED_ROJO, HIGH);
+    digitalWrite(LED_AMARILLO, LOW); // Apagamos el amarillo para que destaque el peligro
+    tone(BUZZER_PIN, 1000);
+  } 
+  // 🟡 ZONA DE PRECAUCIÓN (entre 16 cm y 50 cm)
+  else if (distancia <= DISTANCIA_PRECAUCION_CM) {
+    digitalWrite(LED_ROJO, LOW);
+    noTone(BUZZER_PIN);
+    
+    // Lógica para hacer parpadear el LED amarillo sin usar delay()
+    if (tiempoActual - tiempoAnterior >= intervaloParpadeo) {
+      tiempoAnterior = tiempoActual; // Actualizamos el temporizador
+      
+      // Invertimos el estado del LED (si estaba apagado lo prendemos, y viceversa)
+      if (estadoLedAmarillo == LOW) {
+        estadoLedAmarillo = HIGH;
+      } else {
+        estadoLedAmarillo = LOW;
+      }
+      digitalWrite(LED_AMARILLO, estadoLedAmarillo);
+    }
+  } 
+  // 🟢 FUERA DE RANGO (> 50 cm) - Todo apagado
+  else {
+    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_AMARILLO, LOW);
+    noTone(BUZZER_PIN);
+  }
+
+  //  ARNÉS CONECTADO / DETECTA LUZ
+  if (ldrValor > LDR_UMBRAL_ARNES) {
+    digitalWrite(LED_VERDE, HIGH);
+  } else {
+    digitalWrite(LED_VERDE, LOW);
+  }
+
+  delay(100);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PESTAÑA 4: EQUIPO DE TRABAJO (FLIP CARDS GRANDES)
+         =================================================== -->
+    <section id="equipo" class="tab-content">
+      <span class="section-badge">Consultores Especialistas</span>
+      <h2 style="font-size: 2.2rem; margin-bottom: 10px;">Equipo Desarrollador de SAFE RIDE</h2>
+      <p style="color: var(--text-muted); margin-bottom: 30px;">
+        Pasa el cursor sobre las tarjetas interactivas para alternar entre la Foto Real y el Avatar generado por IA.
+      </p>
+
+      <div class="grid-3">
+        <!-- Integrante 1 -->
+        <div class="team-card-container">
+          <div class="team-card-inner">
+            <h3>Primer Apellido 1</h3>
+            <p style="color: var(--orange-pop); font-weight: 800; font-size: 0.9rem;">Líder de Proyectos & C++</p>
+            
+            <!-- FLIP BOX INTERACTIVA GRANDE -->
+            <div class="flip-box" onclick="this.classList.toggle('flipped')">
+              <div class="flip-box-inner">
+                <div class="flip-front">
+                  <div class="avatar-large-icon">📸</div>
+                  <strong style="font-size: 1.1rem;">[ FOTO REAL ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">(Haz clic para voltear)</span>
+                </div>
+                <div class="flip-back">
+                  <div class="avatar-large-icon">🤖</div>
+                  <strong style="font-size: 1.1rem;">[ AVATAR IA ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">Versión Estilizada por IA</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="info-toggle-btn" onclick="toggleMemberInfo(this)">Ver Más Información ▾</button>
+            <div class="member-info-extra">
+              <p><strong>Rol:</strong> Desarrollo de la lógica de control ultrasónico en C++ e integración de sensores.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrante 2 -->
+        <div class="team-card-container">
+          <div class="team-card-inner">
+            <h3>Primer Apellido 2</h3>
+            <p style="color: var(--orange-pop); font-weight: 800; font-size: 0.9rem;">Especialista en Hardware</p>
+            
+            <!-- FLIP BOX INTERACTIVA GRANDE -->
+            <div class="flip-box" onclick="this.classList.toggle('flipped')">
+              <div class="flip-box-inner">
+                <div class="flip-front">
+                  <div class="avatar-large-icon">📸</div>
+                  <strong style="font-size: 1.1rem;">[ FOTO REAL ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">(Haz clic para voltear)</span>
+                </div>
+                <div class="flip-back">
+                  <div class="avatar-large-icon">🤖</div>
+                  <strong style="font-size: 1.1rem;">[ AVATAR IA ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">Versión Estilizada por IA</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="info-toggle-btn" onclick="toggleMemberInfo(this)">Ver Más Información ▾</button>
+            <div class="member-info-extra">
+              <p><strong>Rol:</strong> Diseño del esquema del circuito en Tinkercad, alambrado y ensamble físico.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrante 3 -->
+        <div class="team-card-container">
+          <div class="team-card-inner">
+            <h3>Primer Apellido 3</h3>
+            <p style="color: var(--orange-pop); font-weight: 800; font-size: 0.9rem;">Documentación & Media</p>
+            
+            <!-- FLIP BOX INTERACTIVA GRANDE -->
+            <div class="flip-box" onclick="this.classList.toggle('flipped')">
+              <div class="flip-box-inner">
+                <div class="flip-front">
+                  <div class="avatar-large-icon">📸</div>
+                  <strong style="font-size: 1.1rem;">[ FOTO REAL ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">(Haz clic para voltear)</span>
+                </div>
+                <div class="flip-back">
+                  <div class="avatar-large-icon">🤖</div>
+                  <strong style="font-size: 1.1rem;">[ AVATAR IA ]</strong>
+                  <span style="font-size: 0.75rem; margin-top: 5px;">Versión Estilizada por IA</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="info-toggle-btn" onclick="toggleMemberInfo(this)">Ver Más Información ▾</button>
+            <div class="member-info-extra">
+              <p><strong>Rol:</strong> Redacción del informe técnico bajo normas APA, creación de infografía y edición del podcast.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PESTAÑA 5: DOCUMENTACIÓN (INFORME, INFOGRAFÍA, PODCAST)
+         =================================================== -->
+    <section id="documentos" class="tab-content">
+      <span class="section-badge">Entregables Oficiales</span>
+      <h2 style="font-size: 2.2rem; margin-bottom: 25px;">Documentación Formal del Proyecto</h2>
+
+      <!-- Informe Técnico PDF -->
+      <div class="pop-card">
+        <h3>📄 Informe Técnico de Investigación</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">
+          Documento elaborado en Microsoft Word (exportado a PDF) bajo normas APA nativas. Incluye saltos de sección, tablas explicativas y esquemas en hojas horizontales.
+        </p>
+        <div class="slot-placeholder" style="margin-top: 20px;">
+          <span style="font-size: 3rem;">📑</span>
+          <p style="font-weight: 800; color: var(--orange-pop); margin-top: 10px;">[ VISOR EMBEBIDO DEL INFORME TÉCNICO PDF ]</p>
+        </div>
+      </div>
+
+      <!-- Infografía Digital -->
+      <div class="pop-card">
+        <h3>🖼️ Infografía Ejecutiva (Prompt IA)</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">
+          Diseño visual sintetizado creado mediante Prompt Engineering avanzado, ofreciendo un acabado profesional que disimula el uso directo de IA.
+        </p>
+        <div class="slot-placeholder" style="margin-top: 20px;">
+          <span style="font-size: 3rem;">📊</span>
+          <p style="font-weight: 800; color: var(--orange-pop); margin-top: 10px;">[ ESPACIO PARA LA INFOGRAFÍA DIGITAL ]</p>
+        </div>
+      </div>
+
+      <!-- Podcast Audio -->
+      <div class="pop-card">
+        <h3>🎙️ Podcast Informativo (Máx. 5 Minutos)</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 5px;">
+          Explicación auditiva completa sobre la problemática en el IRTRA Petapa y cómo SAFE RIDE solventa las fallas de seguridad.
+        </p>
+        <div class="slot-placeholder" style="height: 180px; margin-top: 20px;">
+          <audio controls style="width: 80%;">
+            <source src="#" type="audio/mpeg">
+            Tu navegador no soporta el reproductor de audio.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PESTAÑA 6: CONTACTO
+         =================================================== -->
+    <section id="contacto" class="tab-content">
+      <div class="pop-card" style="max-width: 650px; margin: 0 auto; padding: 40px;">
+        <span class="section-badge" style="display: block; text-align: center;">Atención al Cliente</span>
+        <h2 style="text-align: center; color: var(--orange-pop); margin-bottom: 10px;">Contacto SAFE RIDE</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">¿Tienes consultas sobre nuestras soluciones de automatización?</p>
+        
+        <form onsubmit="event.preventDefault(); alert('¡Gracias por comunicarte con SAFE RIDE! ✴');">
+          <label style="font-weight: 700;">Nombre Completo</label>
+          <input type="text" class="form-control" placeholder="Escribe tu nombre..." required>
+
+          <label style="font-weight: 700;">Correo Electrónico</label>
+          <input type="email" class="form-control" placeholder="correo@ejemplo.com" required>
+
+          <label style="font-weight: 700;">Mensaje o Consulta</label>
+          <textarea class="form-control" rows="4" style="border-radius: 20px;" placeholder="Escribe tu mensaje..." required></textarea>
+
+          <button type="submit" class="btn-submit">Enviar Mensaje ✴</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 SAFE RIDE — Ingeniería & Automatización IRTRA Petapa ✴</p>
+  </footer>
+
+  <!-- LÓGICA JAVASCRIPT (PESTAÑAS Y COMPONENTES INTERACTIVOS) -->
+  <script>
+    // Cambio de pestañas navegables
+    function switchTab(tabId, btnElement) {
+      // Ocultar todas las pestañas
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Desactivar todos los botones
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Activar la pestaña y el botón correspondientes
+      document.getElementById(tabId).classList.add('active');
+      btnElement.classList.add('active');
+
+      // Scroll automático al inicio de la pestaña
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Desplegar información extra del integrante
+    function toggleMemberInfo(btn) {
+      const extraInfo = btn.nextElementSibling;
+      if (extraInfo.style.display === "block") {
+        extraInfo.style.display = "none";
+        btn.innerText = "Ver Más Información ▾";
+      } else {
+        extraInfo.style.display = "block";
+        btn.innerText = "Ocultar Información ▴";
+      }
+    }
+  </script>
+</body>
+</html>
